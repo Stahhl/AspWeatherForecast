@@ -6,6 +6,9 @@
 trigger:
 - master
 
+# variables:
+#   imageName: 'aspweatherforecast:$(Build.BuildId)'
+
 stages:
 
 - stage: Dotnet
@@ -59,15 +62,15 @@ stages:
         command: 'build'
         Dockerfile: '**/Dockerfile'
 
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'docker stahhl'
-        command: 'logout'
+    # - task: Docker@2
+    #   inputs:
+    #     containerRegistry: 'docker stahhl'
+    #     command: 'logout'
 
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'docker stahhl'
-        command: 'login'
+    # - task: Docker@2
+    #   inputs:
+    #     containerRegistry: 'docker stahhl'
+    #     command: 'login'
         
     - task: Docker@2
       displayName: Push
