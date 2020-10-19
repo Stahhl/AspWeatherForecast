@@ -8,7 +8,7 @@ trigger:
 
 stages:
 
-- stage: BuildAndTest
+- stage: Dotnet
   jobs:
   - job: BuildAndTest
     pool:
@@ -36,6 +36,13 @@ stages:
         command: 'test'
         projects: '**/*Test/*.csproj'
         arguments: '--configuration Release'
+
+# -stage: Docker
+#   jobs:
+#     -job: DockerBuild
+#       steps:
+
+
 
 
 
