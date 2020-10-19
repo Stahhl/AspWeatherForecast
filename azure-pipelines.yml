@@ -1,0 +1,68 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+stages:
+
+- stage: BuildAndTest
+  jobs:
+  - job: BuildAndTest
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    steps:
+
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: 'restore'
+        feedsToUse: 'select'    
+    - task: UseDotNet@2
+      displayName: 'Sdk Version'
+      inputs:
+        packageType: sdk
+        version: 3.1.401
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'test'
+        projects: '**/*Test/*.csproj'
+        arguments: '--configuration Release'
+
+
+
+# -stage: BuildAndTest
+#   jobs: 
+#   -job: BuildAndTest
+#     steps:
+
+#     # Restore dependencies
+#     - task: DotNetCoreCLI@2
+#       displayName: 'dotnet restore'
+#       inputs:
+#         command: restore
+#         projects: '**/*.csproj'
+
+#     # Build app
+#   - task: DotNetCoreCLI@2
+#     displayName: 'dotnet build'
+#     inputs:
+#       command: build
+#       projects: '**/*.csproj'
+#       arguments: '--configuration $(buildConfiguration)'
+
+#   - task: Docker@2
+#     displayName: Build an image
+#     inputs:
+#       command: build
+#       dockerfile: '$(Build.SourcesDirectory)/AspWeatherForecast/Dockerfile'
+#       tags: |
+#         $(tag)
