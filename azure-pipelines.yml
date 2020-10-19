@@ -49,6 +49,8 @@ stages:
     #     containerRegistry: 'docker stahhl'
     #     command: 'login'
 
+
+
     - task: Docker@2
       displayName: Build
       inputs:
@@ -56,6 +58,16 @@ stages:
         repository: 'aspweatherforecast'
         command: 'build'
         Dockerfile: '**/Dockerfile'
+
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'docker stahhl'
+        command: 'logout'
+
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'docker stahhl'
+        command: 'login'
         
     - task: Docker@2
       displayName: Push
