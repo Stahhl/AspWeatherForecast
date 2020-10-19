@@ -10,22 +10,24 @@ stages:
 
 - stage: Dotnet
   jobs:
-  - job: BuildAndTest
+  - job: RestoreBuildTest
     pool:
+
       vmImage: 'Ubuntu-16.04'
     steps:
 
-    - task: DotNetCoreCLI@2
-      displayName: Restore
-      inputs:
-        command: 'restore'
-        feedsToUse: 'select'    
     - task: UseDotNet@2
       displayName: 'Sdk Version'
       inputs:
         packageType: sdk
         version: 3.1.401
         installationPath: $(Agent.ToolsDirectory)/dotnet
+
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: 'restore'
+        feedsToUse: 'select'    
     - task: DotNetCoreCLI@2
       inputs:
         command: 'build'
@@ -37,10 +39,26 @@ stages:
         projects: '**/*Test/*.csproj'
         arguments: '--configuration Release'
 
-# -stage: Docker
-#   jobs:
-#     -job: DockerBuild
-#       steps:
+- stage: Docker
+  jobs:
+  - job: LoginBuildPush
+    steps:
+    
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'docker stahhl'
+        command: 'login'
+        
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'docker stahhl'
+        repository: 'aspweatherforecast'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+      
+    
+
+
 
 
 
