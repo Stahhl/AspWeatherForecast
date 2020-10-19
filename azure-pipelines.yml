@@ -56,8 +56,9 @@ stages:
     - task: Docker@2
       displayName: Build and Push
       inputs:
-        command: buildAndPush
-        repository: foo
+        repository: 'stahhl/foo'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
 
     # - task: Docker@2
     #   inputs:
