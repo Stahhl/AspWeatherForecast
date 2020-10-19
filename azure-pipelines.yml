@@ -44,16 +44,25 @@ stages:
   - job: LoginBuildPush
     steps:
     
+    # - task: Docker@2
+    #   inputs:
+    #     containerRegistry: 'docker stahhl'
+    #     command: 'login'
+
     - task: Docker@2
-      inputs:
-        containerRegistry: 'docker stahhl'
-        command: 'login'
-        
-    - task: Docker@2
+      displayName: Build
       inputs:
         containerRegistry: 'docker stahhl'
         repository: 'aspweatherforecast'
-        command: 'buildAndPush'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        
+    - task: Docker@2
+      displayName: Push
+      inputs:
+        containerRegistry: 'docker stahhl'
+        repository: 'aspweatherforecast'
+        command: 'push'
         Dockerfile: '**/Dockerfile'
       
     
