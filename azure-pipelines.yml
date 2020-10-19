@@ -45,37 +45,43 @@ stages:
 - stage: Docker
   jobs:
   - job: LoginBuildPush
-    steps:
-    
+    steps:    
+
+    - task: Docker@2
+      displayName: Login to Docker Hub
+      inputs:
+        containerRegistry: docker stahhl
+        command: login
+
+    - task: Docker@2
+      displayName: Build and Push
+      inputs:
+        command: buildAndPush
+        repository: foo
+
     # - task: Docker@2
     #   inputs:
     #     containerRegistry: 'docker stahhl'
     #     command: 'login'
 
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'docker stahhl'
-        command: 'login'
-
-    - task: Docker@2
-      displayName: Build
-      inputs:
-        repository: 'aspweatherforecast'
-        command: 'build'
-        Dockerfile: '**/Dockerfile'
-
     # - task: Docker@2
+    #   displayName: Build
     #   inputs:
-    #     containerRegistry: 'docker stahhl'
-    #     command: 'logout'
+    #     command: 'build'
+    #     Dockerfile: '**/Dockerfile'
+
+    # # - task: Docker@2
+    # #   inputs:
+    # #     containerRegistry: 'docker stahhl'
+    # #     command: 'logout'
 
         
-    - task: Docker@2
-      displayName: Push
-      inputs:
-        repository: 'aspweatherforecast'
-        command: 'push'
-        Dockerfile: '**/Dockerfile'
+    # - task: Docker@2
+    #   displayName: Push
+    #   inputs:
+    #     repository: 'foo'
+    #     command: 'push'
+    #     Dockerfile: '**/Dockerfile'
       
     
 
