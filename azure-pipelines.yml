@@ -43,7 +43,15 @@ stages:
 - stage: Docker
   jobs:
   - job: BuildAndPushToHub
-    steps:    
+    steps:  
+
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          
+          echo 'Hello world'
 
     # - task: Docker@2
     #   displayName: BuildAndPush
@@ -52,7 +60,4 @@ stages:
     #     repository: '$(DockerRepo)'
     #     command: 'buildAndPush'
     #     Dockerfile: '**/Dockerfile'
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: 'Hello World'
+
