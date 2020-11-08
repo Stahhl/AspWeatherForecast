@@ -14,6 +14,14 @@ stages:
   jobs:
   - job: RestoreBuildTest
     steps:
+    
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your PowerShell commands here.
+          
+          Write-Host "Hello World"
 
     - task: UseDotNet@2
       displayName: 'Sdk'
@@ -40,22 +48,22 @@ stages:
         projects: '**/*Test/*.csproj'
         arguments: '--configuration Release'
 
-- stage: Docker
-  jobs:
-  - job: BuildAndPushToHub
-    steps:  
+# - stage: Docker
+#   jobs:
+#   - job: BuildAndPushToHub
+#     steps:  
 
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: |
-          docker --version
+#     - task: Bash@3
+#       inputs:
+#         targetType: 'inline'
+#         script: |
+#           docker --version
 
-    - task: Docker@2
-      displayName: BuildAndPush
-      inputs:
-        containerRegistry: '$(DockerRegistry)'
-        repository: '$(DockerRepo)'
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
+#     - task: Docker@2
+#       displayName: BuildAndPush
+#       inputs:
+#         containerRegistry: '$(DockerRegistry)'
+#         repository: '$(DockerRepo)'
+#         command: 'buildAndPush'
+#         Dockerfile: '**/Dockerfile'
 
