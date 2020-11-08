@@ -19,7 +19,7 @@ stages:
       displayName: 'Sdk'
       inputs:
         packageType: sdk
-        version: 3.1.401
+        version: 3.1
         installationPath: $(Agent.ToolsDirectory)/dotnet
 
     - task: DotNetCoreCLI@2
@@ -40,15 +40,15 @@ stages:
         projects: '**/*Test/*.csproj'
         arguments: '--configuration Release'
 
-- stage: Docker
-  jobs:
-  - job: BuildAndPushToHub
-    steps:    
+# - stage: Docker
+#   jobs:
+#   - job: BuildAndPushToHub
+#     steps:    
 
-    - task: Docker@2
-      displayName: BuildAndPush
-      inputs:
-        containerRegistry: '$(DockerRegistry)'
-        repository: '$(DockerRepo)'
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
+#     - task: Docker@2
+#       displayName: BuildAndPush
+#       inputs:
+#         containerRegistry: '$(DockerRegistry)'
+#         repository: '$(DockerRepo)'
+#         command: 'buildAndPush'
+#         Dockerfile: '**/Dockerfile'
