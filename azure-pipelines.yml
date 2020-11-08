@@ -10,35 +10,35 @@ pool: self-hosted
 
 stages:
 
-# - stage: Dotnet
-#   jobs:
-#   - job: RestoreBuildTest
-#     steps:
+- stage: Dotnet
+  jobs:
+  - job: RestoreBuildTest
+    steps:
 
-#     - task: UseDotNet@2
-#       displayName: 'Sdk'
-#       inputs:
-#         packageType: sdk
-#         version: 3.1.x
-#         installationPath: $(Agent.ToolsDirectory)/dotnet
+    - task: UseDotNet@2
+      displayName: 'Sdk'
+      inputs:
+        packageType: sdk
+        version: 3.1.x
+        installationPath: $(Agent.ToolsDirectory)/dotnet
 
-#     - task: DotNetCoreCLI@2
-#       displayName: Restore
-#       inputs:
-#         command: 'restore'
-#         feedsToUse: 'select'    
-#     - task: DotNetCoreCLI@2
-#       displayName: Build
-#       inputs:
-#         command: 'build'
-#         projects: '**/*.csproj'
-#         arguments: '--configuration $(buildConfiguration)'
-#     - task: DotNetCoreCLI@2
-#       displayName: Test
-#       inputs:
-#         command: 'test'
-#         projects: '**/*Test/*.csproj'
-#         arguments: '--configuration Release'
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: 'restore'
+        feedsToUse: 'select'    
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'
+    - task: DotNetCoreCLI@2
+      displayName: Test
+      inputs:
+        command: 'test'
+        projects: '**/*Test/*.csproj'
+        arguments: '--configuration Release'
 
 - stage: Docker
   jobs:
@@ -49,17 +49,13 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          # Write your commands here
-          
-          echo 'Hello world'
-
           docker --version
 
-    # - task: Docker@2
-    #   displayName: BuildAndPush
-    #   inputs:
-    #     containerRegistry: '$(DockerRegistry)'
-    #     repository: '$(DockerRepo)'
-    #     command: 'buildAndPush'
-    #     Dockerfile: '**/Dockerfile'
+    - task: Docker@2
+      displayName: BuildAndPush
+      inputs:
+        containerRegistry: '$(DockerRegistry)'
+        repository: '$(DockerRepo)'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
 
