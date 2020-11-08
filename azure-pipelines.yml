@@ -13,8 +13,6 @@ stages:
 - stage: Dotnet
   jobs:
   - job: RestoreBuildTest
-    pool:
-      vmImage: 'Ubuntu-18.04'
     steps:
 
     - task: UseDotNet@2
