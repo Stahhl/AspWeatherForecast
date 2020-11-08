@@ -6,6 +6,8 @@
 trigger:
 - master
 
+pool: self-hosted
+
 stages:
 
 - stage: Dotnet
