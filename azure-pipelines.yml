@@ -53,7 +53,7 @@ stages:
           
           echo 'Hello world'
 
-          echo 'podman --version'
+          podman --version
 
     # - task: Docker@2
     #   displayName: BuildAndPush
